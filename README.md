@@ -1,8 +1,5 @@
-# Example Order management app
-This app demonstrates a simple order management system using a
-Spring/React/PostgreSQL stack. Sessions are handled by Spring Security on the
-back-end and js-cookie on the frontend. A default Admin user is created with an
-email of "admin@admin.com" and the password is "sosecret".
+# Example Personal Finanace App
+This is an example of how you could create a person finance app with Java Spring, PostgreSQL and React.
 
 ## Stack
 - Spring: The API uses spring framework. It can be found in the `api/`
