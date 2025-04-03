@@ -31,5 +31,7 @@ public class User {
     private Set<Investment> investments;
     @OneToMany
     private Set<TransactionType> transactionTypes;
+    @OneToMany
+    private Set<Transaction> transactions;
 }
 

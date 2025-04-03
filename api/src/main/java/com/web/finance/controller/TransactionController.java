@@ -38,7 +38,6 @@ public class TransactionController {
     @PostMapping
     public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionRequest req) {
         Transaction transaction = transactionMapper.transactionRequestToTransaction(req);
-        transaction = transactionRepository.save(transaction);
         return new ResponseEntity<>(transaction, HttpStatus.CREATED);
     }
 

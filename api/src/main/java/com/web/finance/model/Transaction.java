@@ -22,4 +22,8 @@ public class Transaction {
     private LocalDateTime transactionDate;
     private String description;
     private BigDecimal amount;
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private Account account;
 }
