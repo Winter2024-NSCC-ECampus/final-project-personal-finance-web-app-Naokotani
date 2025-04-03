@@ -35,15 +35,15 @@ public class AccountController {
     }
 
     @PutMapping
-    public ResponseEntity<String> updateAccount(@RequestBody AccountRequest req){
+    public ResponseEntity<Account> updateAccount(@RequestBody AccountRequest req){
         Account account = accountMapper.accountRequestToAccount(req);
-        accountRepository.save(account);
-        return new ResponseEntity<>("Account Updated", HttpStatus.OK);
+        account = accountRepository.save(account);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @DeleteMapping
     public ResponseEntity<String> deleteAccount(@RequestParam Long id){
         accountRepository.deleteById(id);
-        return new ResponseEntity<>("Account Deleted", HttpStatus.OK);
+        return new ResponseEntity<>("Account Deleted", HttpStatus.NO_CONTENT);
     }
 }
