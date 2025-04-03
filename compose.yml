@@ -1,0 +1,53 @@
+services:
+  finance-db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: topsecret
+    ports:
+      - 5432:5432
+    volumes:
+      - order-manager-db:/var/lib/postgresql/data
+  finance-dev-client:
+    image: client
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./frontend/
+        target: /usr/src/app/
+      - type: volume
+        target: /usr/src/app/node_modules 
+      - type: bind
+        source: ./frontend/vite.config.js
+        target: /usr/src/app/vite.config.js
+    ports:
+      - 5173:5173
+  fiannce-nginx:
+    image: fianance-nginx
+    restart: unless-stopped
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile.prod
+    ports:
+      - 8085:80
+  finanace-api:
+    image: finance-api
+    restart: unless-stopped
+    depends_on: 
+      - order-manager-db
+    build:
+      context: ./api/
+      dockerfile: ./Dockerfile
+    ports: 
+      - 8081:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://order-manager-db:5432/postgres
+      SPRING_DATASOURCE_PASSWORD: topsecret
+      SPRING_DATASOURCE_USER: postgres
+      ADMIN_EMAIL: admin@admin.com
+      ADMIN_PASSWORD: sosecret
+      API_VERSION: dev
+volumes:
+  finance-db:

@@ -1,0 +1,13 @@
+services:
+  finanace-db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: topsecret
+    ports:
+      - 5432:5432
+    volumes:
+      - order-manager-db:/var/lib/postgresql/data
+
+volumes:
+  finance-db:
