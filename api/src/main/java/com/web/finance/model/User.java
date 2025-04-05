@@ -30,8 +30,8 @@ public class User {
     @OneToMany
     private Set<Investment> investments;
     @OneToMany
-    private Set<TransactionType> transactionTypes;
-    @OneToMany
     private Set<Transaction> transactions;
+    @OneToMany
+    private Set<Recurring> recurrings;
 }
 

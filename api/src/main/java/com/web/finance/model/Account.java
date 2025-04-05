@@ -1,15 +1,13 @@
 package com.web.finance.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,10 +18,12 @@ public class Account {
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToOne
-    private AccountType type;
+    private String name;
+    private String type;
     @ManyToOne
     private User user;
+    @OneToMany
+    private Set<Recurring> recurringList;
     private BigDecimal balance;
 
 

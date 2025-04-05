@@ -7,8 +7,7 @@ import java.math.BigDecimal;
 @Data
 public class InvestmentResponse {
     private Long id;
-    private Long investmentTypeId;
-    private Long investmentTypeDescription;
+    private String type;
     private String description;
     private BigDecimal balance;
 }

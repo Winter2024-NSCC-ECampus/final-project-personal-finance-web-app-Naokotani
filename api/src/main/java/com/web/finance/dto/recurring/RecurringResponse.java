@@ -8,5 +8,6 @@ import java.math.BigDecimal;
 public class RecurringResponse {
     private Long id;
     private String description;
+    private String frequency;
     private BigDecimal amount;
 }

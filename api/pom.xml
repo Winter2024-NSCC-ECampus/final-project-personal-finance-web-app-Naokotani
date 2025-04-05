@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.emissions</groupId>
-    <artifactId>order-manager-api</artifactId>
+    <artifactId>finance-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>todo-app</name>
-    <description>todo-app</description>
+    <name>finance-app</name>
+    <description>finance-app</description>
     <url/>
     <licenses>
         <license/>
@@ -28,7 +28,19 @@
     </scm>
     <properties>
         <java.version>23</java.version>
+        <spring-shell.version>3.4.0</spring-shell.version>
     </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.shell</groupId>
+                <artifactId>spring-shell-dependencies</artifactId>
+                <version>${spring-shell.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -68,11 +80,6 @@
             <version>1.5.5.Final</version>
         </dependency>
         <dependency>
-            <groupId>com.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>5.7.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
@@ -96,6 +103,10 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.shell</groupId>
+            <artifactId>spring-shell-starter</artifactId>
         </dependency>
     </dependencies>
     <build>

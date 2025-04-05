@@ -19,6 +19,9 @@ public class Recurring {
     private Long id;
     @ManyToOne
     private User user;
+    @ManyToOne
+    private Account account;
     private String description;
+    private RecurFrecuency frequency;
     private BigDecimal amount;
 }

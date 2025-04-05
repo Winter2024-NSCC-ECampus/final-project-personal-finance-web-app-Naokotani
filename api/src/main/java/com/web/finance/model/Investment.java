@@ -22,8 +22,8 @@ public class Investment {
     private Long id;
     @ManyToOne
     private User user;
-    @ManyToOne
-    private InvestmentType investmentType;
+    private String type;
     private String description;
+    private BigDecimal interestRate;
     private BigDecimal balance;
 }

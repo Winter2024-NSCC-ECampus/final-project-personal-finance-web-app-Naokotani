@@ -12,8 +12,5 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface InvestmentMapper {
     Investment investmentRequestToInvestment(InvestmentRequest investmentRequest);
-
-    @Mapping(target="investmentTypeId", source="investmentType.id")
-    @Mapping(target="investmentTypeDescription", source="investmentType.description")
     InvestmentResponse investmentToInvestmentResponse(Investment investment);
 }

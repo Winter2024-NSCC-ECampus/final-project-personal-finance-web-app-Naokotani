@@ -1,6 +1,7 @@
 package com.web.finance.controller;
 
 import com.web.finance.dto.account.AccountRequest;
+import com.web.finance.dto.account.AccountResponse;
 import com.web.finance.mapper.AccountMapper;
 import com.web.finance.model.Account;
 import com.web.finance.repository.AccountRepository;
@@ -22,9 +23,10 @@ public class AccountController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Account>> getAccounts(){
+    public ResponseEntity<List<AccountResponse>> getAccounts(){
         List<Account> accounts = accountRepository.findAll();
-        return ResponseEntity.ok(accounts);
+        List<AccountResponse> res = accounts.stream().map(accountMapper::accountToAccountResponse).toList();
+        return ResponseEntity.ok(res);
     }
 
     @PostMapping
@@ -35,10 +37,12 @@ public class AccountController {
     }
 
     @PutMapping
-    public ResponseEntity<Account> updateAccount(@RequestBody AccountRequest req){
+    public ResponseEntity<AccountResponse> updateAccount(@RequestBody AccountRequest req){
         Account account = accountMapper.accountRequestToAccount(req);
         account = accountRepository.save(account);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        AccountResponse res = accountMapper.accountToAccountResponse(account);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+
     }
 
     @DeleteMapping

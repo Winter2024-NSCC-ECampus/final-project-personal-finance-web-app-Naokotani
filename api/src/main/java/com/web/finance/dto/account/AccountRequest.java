@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 @Data
 public class AccountRequest {
-    private Long typeId;
+    private String name;
+    private String type;
     private BigDecimal balance;
 }
