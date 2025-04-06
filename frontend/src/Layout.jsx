@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getCart } from "./cart";
 import Cookies from "js-cookie";
 
 const Navbar = () => {
-  const cart = getCart();
   const [user, setUser] = useState(false);
 
   const location = useLocation();
@@ -25,12 +23,11 @@ const Navbar = () => {
   }, [location]);
 
 
-  const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
   return (
     <nav className="navbar is-primary" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Link to="/" className="navbar-item">
-          <h1 className="title">STORE</h1>
+          <h1 className="title">Finance App</h1>
         </Link>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <a
@@ -53,19 +50,11 @@ const Navbar = () => {
             <Link to="/" className="navbar-item" onClick={handleLogout}>
               Sign Out
             </Link> :
-            <Link to="/login" className="navbar-item">
+            <Link to="/log-in" className="navbar-item">
               Sign In
             </Link>
           }
 
-          <Link to="/cart" className="navbar-item">
-            <span className="icon">
-              <i className="material-icons">shopping_cart</i>
-            </span>
-            {totalItemsInCart > 0 && (
-              <span className="badge">{totalItemsInCart}</span>
-            )}
-          </Link>
         </div>
       </div>
     </nav>

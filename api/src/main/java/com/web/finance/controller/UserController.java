@@ -62,8 +62,8 @@ public class UserController {
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<AuthResponse> signin(@RequestBody User loginRequest) {
+    @PostMapping("/sign-in")
+    public ResponseEntity<AuthResponse> signIn(@RequestBody User loginRequest) {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
         Authentication authentication = authenticate(username,password);
@@ -93,7 +93,7 @@ public class UserController {
     private Authentication authenticate(String username, String password) {
         UserDetails userDetails = customUserDetails.loadUserByUsername(username);
         if(userDetails == null) {
-            System.out.println("Sign in details - null" + userDetails);
+            System.out.println("Sign in details - null");
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
         if(!passwordEncoder.matches(password,userDetails.getPassword())) {

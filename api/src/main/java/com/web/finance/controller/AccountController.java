@@ -5,21 +5,26 @@ import com.web.finance.dto.account.AccountResponse;
 import com.web.finance.mapper.AccountMapper;
 import com.web.finance.model.Account;
 import com.web.finance.repository.AccountRepository;
+import com.web.finance.service.CurrentUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/account")
 public class AccountController {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
+    private final CurrentUserService currentUserService;
 
-    public AccountController(AccountRepository accountRepository, AccountMapper accountMapper) {
+    public AccountController(AccountRepository accountRepository, AccountMapper accountMapper, CurrentUserService currentUserService) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
+        this.currentUserService = currentUserService;
     }
 
     @GetMapping
@@ -37,8 +42,16 @@ public class AccountController {
     }
 
     @PutMapping
-    public ResponseEntity<AccountResponse> updateAccount(@RequestBody AccountRequest req){
+    public ResponseEntity<AccountResponse> updateAccount(@RequestBody AccountRequest req, @RequestParam Long id) {
+        Optional<Account> oldAccount = accountRepository.findById(id);
+        oldAccount.ifPresent(a -> {
+            if(!currentUserService.getCurrentUser().getId().equals(a.getId())){
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
+        });
+        oldAccount.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Account account = accountMapper.accountRequestToAccount(req);
+        account.setId(id);
         account = accountRepository.save(account);
         AccountResponse res = accountMapper.accountToAccountResponse(account);
         return new ResponseEntity<>(res, HttpStatus.OK);

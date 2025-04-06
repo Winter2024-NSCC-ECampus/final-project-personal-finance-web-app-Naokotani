@@ -22,7 +22,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private String role;
+    private String role = "ROLE_USER";
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @OneToMany

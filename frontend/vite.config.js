@@ -9,7 +9,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api/': {
-        target: 'http://order-manager-api:8080',
+        target: 'http://finance-api:8080',
         changeOrigin: true,
         cors: true,
         secure: false,

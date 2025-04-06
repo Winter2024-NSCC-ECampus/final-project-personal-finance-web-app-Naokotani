@@ -16,14 +16,11 @@ function LoginPage() {
         return;
       }
 
-      const res = await axiosInstance.post(`/auth/signin`, { email, password });
+      const res = await axiosInstance.post(`/auth/sign-in`, { email, password });
       Cookies.set('authToken', res.data.jwt, { expires: 7 });
       Cookies.set('role', res.data.role[0]);
 
-      if (res.data.role.includes("ROLE_admin"))
-        history('/admin/panel');
-      else
-        history('/');
+      history('/');
 
     } catch (error) {
       console.error('Login failed:', error.response ? error.response.data : error.message);

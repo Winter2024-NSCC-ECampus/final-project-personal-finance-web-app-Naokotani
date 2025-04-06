@@ -8,8 +8,6 @@ function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [address, setAddress] = useState('');
-  const [landmark, setLandmark] = useState('');
   const [error, setError] = useState(''); // State to manage error messages
   const history = useNavigate(); // Get the history object for redirection
   const apiUrl = import.meta.env.VITE_DEV_API_URL;
@@ -17,7 +15,7 @@ function SignupPage() {
   const handleSignup = async () => {
     try {
       // Check for empty fields
-      if (!firstName || !lastName || !email || !password || !confirmPassword || !address || !landmark) {
+      if (!firstName || !lastName || !email || !password || !confirmPassword) {
         setError('Please fill in all fields.');
         return;
       }
@@ -31,8 +29,6 @@ function SignupPage() {
         lastName,
         email,
         password,
-        address,
-        landmark
       });
 
       console.log(response.data);
@@ -116,34 +112,6 @@ function SignupPage() {
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label" htmlFor="address">Address</label>
-            <div className="control">
-              <input
-                className="input"
-                id="address"
-                type="text"
-                placeholder="Address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label" htmlFor="landmark">Landmark</label>
-            <div className="control">
-              <input
-                className="input"
-                id="landmark"
-                type="text"
-                placeholder="Landmark"
-                value={landmark}
-                onChange={(e) => setLandmark(e.target.value)}
               />
             </div>
           </div>

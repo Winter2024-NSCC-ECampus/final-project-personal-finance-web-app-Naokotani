@@ -7,7 +7,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - order-manager-db:/var/lib/postgresql/data
+      - finance-db:/var/lib/postgresql/data
   finance-dev-client:
     image: client
     build:
@@ -32,18 +32,18 @@ services:
       dockerfile: Dockerfile.prod
     ports:
       - 8085:80
-  finanace-api:
+  finance-api:
     image: finance-api
     restart: unless-stopped
     depends_on: 
-      - order-manager-db
+      - finance-db
     build:
       context: ./api/
       dockerfile: ./Dockerfile
     ports: 
       - 8081:8080
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://order-manager-db:5432/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://finance-db:5432/postgres
       SPRING_DATASOURCE_PASSWORD: topsecret
       SPRING_DATASOURCE_USER: postgres
       ADMIN_EMAIL: admin@admin.com
