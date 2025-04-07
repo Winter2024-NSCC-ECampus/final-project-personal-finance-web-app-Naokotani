@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class Transaction {
     @Id
     @GeneratedValue
     private Long id;
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime transactionDate;
     private String description;

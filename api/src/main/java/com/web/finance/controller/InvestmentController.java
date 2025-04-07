@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/investment")
+@RequestMapping("/api/investment")
 public class InvestmentController {
     private final InvestmentRepository investmentRepository;
     private final InvestmentMapper investmentMapper;

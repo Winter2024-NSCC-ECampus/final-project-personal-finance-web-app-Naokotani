@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const Navbar = () => {
   const [user, setUser] = useState(false);
-
   const location = useLocation();
 
 
   const handleLogout = () => {
     Cookies.remove('authToken');
     setUser(null);
+    useNavigate('/log-in');
   }
 
   useEffect(() => {

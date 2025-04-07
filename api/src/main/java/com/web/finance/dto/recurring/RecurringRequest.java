@@ -9,5 +9,6 @@ import java.math.BigDecimal;
 public class RecurringRequest {
     private String description;
     private String frequency;
+    private Long accountId;
     private BigDecimal amount;
 }

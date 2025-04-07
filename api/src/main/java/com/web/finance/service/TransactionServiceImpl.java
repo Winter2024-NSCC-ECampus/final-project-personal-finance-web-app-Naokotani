@@ -38,9 +38,11 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction transaction = transactionMapper.transactionRequestToTransaction(transactionRequest);
         Account account = accountRepository.findById(transactionRequest.getAccountId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
         User user = userService.getCurrentUser();
-        if (!user.getAccounts().contains(account)) {
+        if (user.getAccounts().contains(account)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         };
+        transaction.setAccount(account);
+        transaction.setUser(user);
         transactionRepository.save(transaction);
         account.setBalance(account.getBalance().add(transaction.getAmount()));
         accountRepository.save(account);

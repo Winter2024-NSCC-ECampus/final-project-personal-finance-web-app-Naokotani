@@ -4,6 +4,7 @@ import com.web.finance.dto.account.AccountRequest;
 import com.web.finance.dto.account.AccountResponse;
 import com.web.finance.mapper.AccountMapper;
 import com.web.finance.model.Account;
+import com.web.finance.model.User;
 import com.web.finance.repository.AccountRepository;
 import com.web.finance.service.CurrentUserService;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/api/account")
 public class AccountController {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
@@ -36,7 +37,9 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<String> createAccount(@RequestBody AccountRequest req){
+        User user = currentUserService.getCurrentUser();
         Account account = accountMapper.accountRequestToAccount(req);
+        account.setUser(user);
         accountRepository.save(account);
         return new ResponseEntity<>("Account Created", HttpStatus.CREATED);
     }

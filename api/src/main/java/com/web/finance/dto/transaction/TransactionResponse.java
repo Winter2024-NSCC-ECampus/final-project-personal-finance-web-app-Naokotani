@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class TransactionResponse {
     private Long id;
-    private LocalDateTime transationDate;
+    private LocalDateTime transactionDate;
     private String description;
     private BigDecimal amount;
 }

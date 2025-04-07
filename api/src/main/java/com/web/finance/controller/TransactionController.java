@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/api/transaction")
 public class TransactionController {
     private final TransactionRepository transactionRepository;
     private final TransactionService transactionService;
@@ -27,8 +27,8 @@ public class TransactionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TransactionResponse>> getTransactions() {
-       List<Transaction> transactions = transactionRepository.findAll();
+    public ResponseEntity<List<TransactionResponse>> getTransactions(@RequestParam Long id) {
+       List<Transaction> transactions = transactionRepository.findByAccountId(id);
        List<TransactionResponse> res = transactions.stream()
                .map(transactionMapper::transactionToTransactionResponse).toList();
        return new ResponseEntity<>(res, HttpStatus.OK);

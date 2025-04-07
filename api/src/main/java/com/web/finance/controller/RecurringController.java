@@ -3,8 +3,11 @@ package com.web.finance.controller;
 import com.web.finance.dto.recurring.RecurringRequest;
 import com.web.finance.dto.recurring.RecurringResponse;
 import com.web.finance.mapper.RecurringMapper;
+import com.web.finance.model.Account;
 import com.web.finance.model.RecurFrecuency;
 import com.web.finance.model.Recurring;
+import com.web.finance.model.User;
+import com.web.finance.repository.AccountRepository;
 import com.web.finance.repository.RecurringRepository;
 import com.web.finance.service.CurrentUserService;
 import org.springframework.http.HttpStatus;
@@ -16,16 +19,18 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/recurring")
+@RequestMapping("/api/recurring")
 public class RecurringController {
     private final RecurringRepository recurringRepository;
     private final RecurringMapper recurringMapper;
     private final CurrentUserService currentUserService;
+    private final AccountRepository accountRepository;
 
-    public RecurringController(RecurringRepository recurringRepository, RecurringMapper recurringMapper, CurrentUserService currentUserService) {
+    public RecurringController(RecurringRepository recurringRepository, RecurringMapper recurringMapper, CurrentUserService currentUserService, AccountRepository accountRepository) {
         this.recurringRepository = recurringRepository;
         this.recurringMapper = recurringMapper;
         this.currentUserService = currentUserService;
+        this.accountRepository = accountRepository;
     }
 
     @GetMapping
@@ -38,6 +43,11 @@ public class RecurringController {
     @PostMapping
     public ResponseEntity<RecurringResponse> create(@RequestBody RecurringRequest recurringRequest) {
         Recurring recurring = recurringMapper.recurringRequestToRecurring(recurringRequest);
+        User user = currentUserService.getCurrentUser();
+        Account account = accountRepository.findById(recurringRequest.getAccountId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        recurring.setAccount(account);
+        recurring.setUser(user);
         recurring = recurringRepository.save(recurring);
         RecurringResponse res = recurringMapper.recurringToRecurringResponse(recurring);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
